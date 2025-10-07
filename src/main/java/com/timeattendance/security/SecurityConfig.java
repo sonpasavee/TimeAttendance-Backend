@@ -26,19 +26,19 @@ public class SecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-    // Password encoder
+    // ================= Password Encoder =================
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // AuthenticationManager
+    // ================= Authentication Manager =================
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    // Security filter chain
+    // ================= Security Filter Chain =================
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -55,14 +55,17 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // WebConfig สำหรับ CORS
+    // ================= WebConfig สำหรับ CORS =================
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // หรือ "/api/**"
-                        .allowedOrigins("https://timeattendance-frontend-mnbgntcog-sonpasavees-projects.vercel.app") // frontend ของคุณ
+                        .allowedOrigins(
+                            "https://timeattendance-frontend-mnbgntcog-sonpasavees-projects.vercel.app", // frontend เก่า
+                            "https://time-attendance-front-end.vercel.app" // frontend ใหม่
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
