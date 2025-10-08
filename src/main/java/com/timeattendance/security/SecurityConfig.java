@@ -42,15 +42,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors() // เปิด CORS
-            .and()
-            .csrf().disable() // ปิด CSRF เพราะใช้ JWT
-            .authorizeHttpRequests()
-            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // อนุญาต preflight
-            .requestMatchers("/api/register", "/api/login").permitAll() // public API
-            .anyRequest().authenticated()
-            .and()
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .cors() // เปิด CORS
+                .and()
+                .csrf().disable() // ปิด CSRF เพราะใช้ JWT
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // อนุญาต preflight
+                .requestMatchers("/api/register", "/api/login").permitAll() // public API
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -61,14 +61,16 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // หรือ "/api/**"
+                registry.addMapping("/**")
                         .allowedOrigins(
-                            "https://time-attendance-front-end.vercel.app" // frontend ใหม่
-                        )
+                                "http://localhost:3000", // สำหรับ dev
+                                "https://time-attendance-front-end.vercel.app" // สำหรับ prod
+                )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };
     }
+
 }
