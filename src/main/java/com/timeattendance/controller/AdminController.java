@@ -151,4 +151,42 @@ public class AdminController {
 
         return leaveService.decide(id, "REJECTED", admin.getId());
     }
+
+    @GetMapping("/leave/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<LeaveResponse> getAllLeaves() {
+        List<LeaveRequest> leaves = leaveRequestRepository.findAll();
+
+        // map entity -> DTO (เพิ่ม startDate, endDate)
+        return leaves.stream()
+            .map(lr -> new LeaveResponse(
+                    lr.getId(),
+                    lr.getReason(),
+                    lr.getStatus(),
+                    lr.getCreatedAt(),
+                    lr.getUser() != null ? lr.getUser().getUsername() : null,
+                    lr.getStartDate(),  // ✅ เพิ่ม
+                    lr.getEndDate()     // ✅ เพิ่ม
+            ))
+            .collect(Collectors.toList());
+    }
+
+    @GetMapping("/leave/status/{status}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<LeaveResponse> getLeavesByStatus(@PathVariable String status) {
+        List<LeaveRequest> leaves = leaveRequestRepository.findByStatus(status.toUpperCase());
+
+        // map entity -> DTO (เพิ่ม startDate, endDate)
+        return leaves.stream()
+            .map(lr -> new LeaveResponse(
+                    lr.getId(),
+                    lr.getReason(),
+                    lr.getStatus(),
+                    lr.getCreatedAt(),
+                    lr.getUser() != null ? lr.getUser().getUsername() : null,
+                    lr.getStartDate(),  // ✅ เพิ่ม
+                    lr.getEndDate()     // ✅ เพิ่ม
+            ))
+            .collect(Collectors.toList());
+    }
 }
