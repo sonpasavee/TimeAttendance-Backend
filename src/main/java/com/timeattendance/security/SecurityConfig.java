@@ -63,7 +63,6 @@ public class SecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // หรือ "/api/**"
                         .allowedOrigins(
-                            "https://timeattendance-frontend-mnbgntcog-sonpasavees-projects.vercel.app", // frontend เก่า
                             "https://time-attendance-front-end.vercel.app" // frontend ใหม่
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
