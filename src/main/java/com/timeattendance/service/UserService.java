@@ -21,17 +21,25 @@ public class UserService {
 
     // Register user
     public User register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (user.getRole() == null) user.setRole("USER");
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    if (user.getRole() == null) user.setRole("USER");
 
-        Profile p = user.getProfile();
-        if (p != null) {
-            p.setUser(user);
-            user.setProfile(p);
-        }
-
-        return userRepository.save(user);
+    // สร้าง profile ถ้า null
+    if (user.getProfile() == null) {
+        Profile p = new Profile();
+        p.setFullName(""); // หรือ username
+        p.setPhoneNumber("");
+        p.setProfileImageUrl("");
+        p.setPosition("");
+        p.setUser(user);
+        user.setProfile(p);
+    } else {
+        user.getProfile().setUser(user);
     }
+
+    return userRepository.save(user);
+}
+
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
