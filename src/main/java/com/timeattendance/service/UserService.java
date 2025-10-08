@@ -50,7 +50,6 @@ public class UserService {
         u.setEmail(userData.getEmail());
         u.setUsername(userData.getUsername());
         u.setRole(userData.getRole());
-        u.setPhone(userData.getPhone());
 
         // Update password if provided
         if (userData.getPassword() != null && !userData.getPassword().isEmpty()) {

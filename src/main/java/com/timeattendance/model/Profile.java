@@ -1,5 +1,7 @@
 package com.timeattendance.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -66,8 +68,9 @@ public class Profile {
 	}
 
 	@OneToOne
-    @JoinColumn(name = "user_id", unique = true)
-    private User user;
+	@JoinColumn(name = "user_id", unique = true)
+	@JsonBackReference
+	private User user;
 
 	
 	
