@@ -58,3 +58,6 @@ Boot and Docker.
 - `POST /admin/users` : สร้างผู้ใช้ใหม่ (ADMIN)
 - `PUT /admin/users/{id}` : แก้ไขผู้ใช้ (ADMIN)
 - `DELETE /admin/users/{id}` : ลบผู้ใช้ (ADMIN)
+
+### ⚠️ หมายเหตุ (TH)
+การสมัครสมาชิกหรือการตอบสนองของ API ครั้งแรกอาจช้ากว่าปกติ เนื่องจาก Backend ถูก Deploy บน Railway แบบฟรี ซึ่งต้องใช้เวลาในการปลุกเซิร์ฟเวอร์ (Cold Start)
